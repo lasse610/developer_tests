@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { TimeSlot, AvailabilityWithDates, Slots } from "../types";
 
+// Filters out slots that are too close in the future to be bookable
 export function getBookableSlotsForAvailabilityWindow(
     dateNow: DateTime,
     slots: TimeSlot[],
@@ -17,6 +18,7 @@ export function getBookableSlotsForAvailabilityWindow(
     return bookableSlots;
 }
 
+// Returns all the slots for the availability window based on the slot duration
 export function getAllSlotsForAvailabilityWindow(
     availabilityWindow: AvailabilityWithDates,
     slotDurationInMinutes: number
@@ -53,6 +55,7 @@ export function getAllSlotsForAvailabilityWindow(
     return allTimeSlotsForDate;
 }
 
+// Groups slots by date so that we can add them to the slots object. Some slots might be on different days
 export function groupSlotsByDate(slots: TimeSlot[]) {
     const slotsByDate: Slots = {};
     for (const slot of slots) {
@@ -65,6 +68,7 @@ export function groupSlotsByDate(slots: TimeSlot[]) {
     return slotsByDate;
 }
 
+// Returns all the bookings for the availability window. Kinda unnecessary for small amount of bookings
 export function getBookingsForAvailabilityWindow(
     availabilityWindow: AvailabilityWithDates,
     allBookings: TimeSlot[]
@@ -82,6 +86,7 @@ export function getBookingsForAvailabilityWindow(
     return bookingsForAvailabilityWindow;
 }
 
+// Returns all the slots that are available for the availability window. allSlots - bookings
 export function getAvailableSlotsForAvailabilityWindow(
     allSlotsForDate: TimeSlot[],
     bookingsForDate: TimeSlot[]
