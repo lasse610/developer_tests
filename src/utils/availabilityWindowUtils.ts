@@ -17,12 +17,8 @@ export function anchorAvailabilityWindowsToDates(
         // We need to check all the availability windows because the one day might have multiple availability windows
         for (const availabilityWindow of availabilityWindows) {
             if (availabilityWindow.from.weekday === weekday) {
-                // Difference between the start and end date of the availability window
-                const endDateDifference =
-                    (availabilityWindow.to.weekday -
-                        availabilityWindow.from.weekday +
-                        7) %
-                    7;
+                // prettier-ignore
+                const endDateDifference =( availabilityWindow.to.weekday - availabilityWindow.from.weekday + 7 ) % 7; // Difference between the start and end date of the availability window
 
                 const availabilityWindowStartDate = date.plus({
                     hours: availabilityWindow.from.hour,
