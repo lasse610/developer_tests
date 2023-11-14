@@ -19,8 +19,10 @@ export function anchorAvailabilityWindowsToDates(
             if (availabilityWindow.from.weekday === weekday) {
                 // Difference between the start and end date of the availability window
                 const endDateDifference =
-                    availabilityWindow.to.weekday -
-                    availabilityWindow.from.weekday;
+                    (availabilityWindow.to.weekday -
+                        availabilityWindow.from.weekday +
+                        7) %
+                    7;
 
                 const availabilityWindowStartDate = date.plus({
                     hours: availabilityWindow.from.hour,

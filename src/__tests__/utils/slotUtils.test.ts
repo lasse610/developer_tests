@@ -3,6 +3,7 @@ import { AvailabilityWithDates, TimeSlot } from "../../types";
 import {
     getAllSlotsForAvailabilityWindow,
     getAvailableSlotsForAvailabilityWindow,
+    getBookableSlotsForAvailabilityWindow,
     getBookingsForAvailabilityWindow,
 } from "../../utils/slotUtils";
 
@@ -106,5 +107,30 @@ describe("slotUtils", () => {
             testBookings
         );
         expect(availableSlots.length).toBe(2);
+    });
+
+    it("should filter out past slots", () => {
+        const now = DateTime.local(2023, 12, 12, 6, 30);
+
+        const slots = [
+            {
+                from: DateTime.local(2022, 12, 11, 10, 15),
+                to: DateTime.local(2022, 12, 11, 10, 30),
+            },
+            {
+                from: DateTime.local(2022, 12, 11, 10, 30),
+                to: DateTime.local(2022, 12, 11, 10, 45),
+            },
+            {
+                from: DateTime.local(2022, 12, 11, 10, 45),
+                to: DateTime.local(2022, 12, 11, 11, 0),
+            },
+        ];
+        const bookableSlots = getBookableSlotsForAvailabilityWindow(
+            now,
+            slots,
+            0
+        );
+        expect(bookableSlots.length).toBe(0);
     });
 });
